@@ -86,7 +86,7 @@ Plug 'vim-python/python-syntax'        " Python syntax highlight
 
 " Colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'chriskempson/base16-vim'         " Base16 themes
+" Plug 'chriskempson/base16-vim'         " Base16 themes
 " Plug 'gerw/vim-hilinktrace'            " Syntax Highlighting Tracer
 " Plug 'fatih/molokai'                  " Monokai and friends
 " Plug 'crusoexia/vim-monokai'
@@ -94,8 +94,8 @@ Plug 'chriskempson/base16-vim'         " Base16 themes
 Plug 'patstockwell/vim-monokai-tasty'
 " Plug 'erichdongubler/vim-sublime-monokai'
 " Plug 'flazz/vim-colorschemes'          " Bunch of color schemes
-Plug 'sainnhe/sonokai'                 " Monokai Pro-like scheme
-Plug 'tanvirtin/monokai.nvim'
+" Plug 'sainnhe/sonokai'                 " Monokai Pro-like scheme
+" Plug 'tanvirtin/monokai.nvim'
 
 " Writing
 Plug 'junegunn/goyo.vim'               " Distraction free mode
@@ -117,29 +117,8 @@ call plug#end()
 
 " Colorscheme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:molokai_original = 0
-
-if has('gui_running')
-    colorscheme base16-gruvbox-dark-hard
-elseif exists("+termguicolors")
-    set termguicolors
-    " The commands below are needed for tmux + termguicolors
-    " This is only necessary if you use "set termguicolors".
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-    " fixes glitch? in colors when using vim with tmux
-    set background=dark
-    set t_Co=256
-
-    colorscheme vim-monokai-tasty
-    " colorscheme sonokai
-    " let g:sonokai_style = 'shusia'
-
-elseif &t_Co < 256
-    colorscheme molokai
-    set nocursorline " looks bad in this mode
-endif
+let g:vim_monokai_tasty_italic = 1
+colorscheme vim-monokai-tasty
 
 let g:python_highlight_all = 1
 
@@ -408,79 +387,7 @@ set noshowmode
 
 "Conquer of Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if isdirectory($HOME . "/.vim/plugged/coc.nvim")
-
-    let g:coc_custom_config = '1'
-    let g:coc_node_path = $HOME . '/.neovim/node/bin/node'
-    " let g:coc_disable_startup_warning = 1
-
-    let g:vista_default_executive = 'coc'
-
-    source ~/.vim/coc.vim
-    " Use autocmd to force lightline update.
-    autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
-    " Lightline mods for CoC compatibility
-    let g:lightline = {
-          \ 'active': {
-          \   'left': [ [ 'mode', 'paste' ],
-          \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified', 'fugitive' ] ],
-          \   'right': [ [ 'lineinfo' ],
-		  \              [ 'percent' ],
-		  \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok', 'filetype', 'fileencoding'] ]
-          \ },
-          \ 'component_function': {
-          \   'filename': 'LightlineFilename',
-          \   'cocstatus': 'coc#status',
-          \   'currentfunction': 'CocCurrentFunction'
-          \ },
-          \ }
-    function! LightlineFilename()
-      return expand('%:t') !=# '' ? @% : '[No Name]'
-    endfunction
-
-    function! CocCurrentFunction()
-        return get(b:, 'coc_current_function', '')
-    endfunction
-
-
-let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
-
-let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
-
-    " vim-easymotion disturbs diagnostics
-    " See https://github.com/neoclide/coc.nvim/issues/110
-    " let g:easymotion#is_active = 0
-    " function! EasyMotionCoc() abort
-    "   if EasyMotion#is_active()
-    "     let g:easymotion#is_active = 1
-    "     CocDisable
-    "   else
-    "     if g:easymotion#is_active == 1
-    "       let g:easymotion#is_active = 0
-    "       CocEnable
-    "     endif
-    "   endif
-    " endfunction
-    " autocmd TextChanged,CursorMoved * call EasyMotionCoc()
-
-   nnoremap <silent> <space>Y  :<C-u>CocList -A --normal yank<cr>
-
-   command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-
-endif
+" remove the configs here because some errors with coc-vim.
 
 " Easymotion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
