@@ -1,0 +1,87 @@
+#!/usr/bin/env zsh
+function alias_if_exists() {
+  # Does the alias only if the aliased program(2nd one) is installed
+    if command -v $2 > /dev/null; then
+        alias "$1"="$2"
+    fi
+}
+
+
+# Better defaults
+alias_if_exists 'diff' 'colordiff'
+alias_if_exists 'ag' 'rg'
+alias_if_exists 'vim' 'nvim'
+alias_if_exists 'fdupes' 'jdupes'
+
+
+# Shortcuts
+
+## cd & ls
+alias dc="cd"
+if command -v exa > /dev/null; then
+  alias ls=exa
+  alias l="exa -1"
+  alias la="exa -a"
+fi
+
+mvr () {
+    # reverse mv
+    mv $2 $1
+}
+
+alias cf='cd $(fd -t d | fzf)'
+
+## Git
+alias ga='git add'
+alias gs='git status'
+alias gu='git pull'
+alias gg='git graph'
+alias gd='git diff'
+alias gsu='git stash && git pull && git stash pop'
+# Note that gs is also ghostscript
+alias ghostscript="/usr/local/bin/gs"
+function gD(){
+    git diff $@ | ydiff
+}
+
+## Jupyter
+alias jc="jupyter console"
+alias jco="jupyter nbconvert"
+alias jn="jupyter notebook"
+alias jn-b="jupyter notebook --no-browser"
+
+# Yotube-DL
+alias yt="youtube-dl"
+alias yta="youtube-dl --extract-audio --audio-format mp3"
+alias ytad="youtube-dl --extract-audio --audio-format mp3 --write-description --add-metadata --embed-thumbnail --write-info-json"
+alias gdl="gallery-dl"
+
+## Misc
+alias my-ip="curl ipinfo.io/ip 2> /dev/null"
+alias sr='screen -r'
+alias sb='subl' # CLI sublime text starter
+alias spell='aspell check --dont-backup'
+alias wg="write-good"
+alias grepc="grep -P --color=always" #Color grep
+alias printpath='echo $PATH | sed "s/:/\\n/g"'
+
+# Other
+# Create separator using current columns
+alias sep='tput cols | python -c "import sys; print(\"=\"*int(sys.stdin.read().strip()))"'
+alias rg="sep; rg -u"
+
+alias clock='watch -n 0.1 "date +"%H:%M:%S" | toilet -f bigmono9"' # -f future
+# Rename terminal Windows
+  # $1 = type; 0 - both, 1 - tab, 2 - title
+  # rest = text
+setTerminalText () {
+    # echo works in bash & zsh
+    local mode=$1 ; shift
+    echo -ne "\033]$mode;$@\007"
+}
+stt_both  () { setTerminalText 0 $@; }
+stt_tab   () { setTerminalText 1 $@; }
+stt_title () { setTerminalText 2 $@; }
+
+tn () { stt_tab $@ && tmux new -s $@; }
+ta () { stt_tab $@ && tmux a -t $@; }
