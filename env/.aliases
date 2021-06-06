@@ -38,6 +38,7 @@ alias gu='git pull'
 alias gg='git graph'
 alias gd='git diff'
 alias gsu='git stash && git pull && git stash pop'
+alias gc='git commit'
 # Note that gs is also ghostscript
 alias ghostscript="/usr/local/bin/gs"
 function gD(){

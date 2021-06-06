@@ -99,7 +99,6 @@ Plug 'patstockwell/vim-monokai-tasty'
 
 " Writing
 Plug 'junegunn/goyo.vim'               " Distraction free mode
-Plug 'junegunn/limelight.vim'          " Focus on current paragraph
 Plug 'rhysd/vim-grammarous'            " GrammarCheck using LanguageTool
 Plug 'ron89/thesaurus_query.vim'       " Synonym query
 
@@ -117,9 +116,7 @@ call plug#end()
 
 " Colorscheme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:vim_monokai_tasty_italic = 1
-colorscheme vim-monokai-tasty
-
+colorscheme desert
 let g:python_highlight_all = 1
 
 syntax on           " enable syntax processing
@@ -422,13 +419,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " * FZF
 set rtp+=/usr/local/opt/fzf
 let g:fzf_layout = { 'down': '~20%' }
-
-
-" * Limelight
-let g:limelight_conceal_ctermfg = 'gray'
-"autocmd! User GoyoEnter Limelight
-"autocmd! User GoyoLeave Limelight!
-
 
 " * SuperTab
 " Tab goes down instead of up
