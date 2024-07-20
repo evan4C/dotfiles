@@ -1,694 +1,198 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Comments in Vimscript start with a `"`.
 
-set nocompatible " VI compatible mode is disabled so that VIm things work
+" Vim is based on Vi. Setting `nocompatible` switches from the default
+" Vi-compatibility mode and enables useful Vim functionality. This
+" configuration option turns out not to be necessary for the file named
+" '~/.vimrc', because Vim automatically enters nocompatible mode if that file
+" is present. But we're including it here just in case this config file is
+" loaded some other way (e.g. saved as `foo`, and then Vim started with
+" `vim -u foo`).
+set nocompatible
 
-" =============================================================================
-"   PLUGINS
-" =============================================================================
-call plug#begin()
+"---------------------------------------------------------
+" Syntax and Indent
+"---------------------------------------------------------
 
-" Load plugins
-" Per file editor config
-Plug 'ciaranm/securemodelines'
+" Turn on syntax highlighting.
+syntax on
 
-" Search
-Plug 'romainl/vim-cool'               " Disables highlight when search is done
-Plug 'haya14busa/incsearch.vim'       " Better incremental search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " FZF plugin, makes Ctrl-P unnecessary
-Plug 'junegunn/fzf.vim'
+" Show matching braces when text indicator is over them
+set showmatch
 
-" Movement
-Plug 'justinmk/vim-sneak'
-Plug 'easymotion/vim-easymotion'
-Plug 'haya14busa/incsearch-easymotion.vim'
-
-" Text Manipulation
-Plug 'tpope/vim-sensible'             " Some better defaults
-Plug 'tpope/vim-unimpaired'           " Pairs of mappings
-Plug 'tpope/vim-surround'             " Surround with parentheses & co
-Plug 'joom/vim-commentary'            " To comment stuff out
-Plug 'terryma/vim-multiple-cursors'   " Multiple cursors like sublime
-Plug 'godlygeek/tabular'              " For alignment
-Plug 'junegunn/vim-easy-align'        " Easier alignment
-Plug 'foosoft/vim-argwrap'            " convert lists of arguments into blocks of arguments
-Plug 'tpope/vim-repeat'               " Adds repeat thorugh . to other packages
-Plug 'tpope/vim-speeddating'          " Dates in vim
-
-" GUI enhancements
-Plug 'itchyny/lightline.vim'          " Better Status Bar
-Plug 'mhinz/vim-startify'             " Better start screen
-Plug 'scrooloose/nerdtree'            " File explorer
-Plug 'simnalamburt/vim-mundo'         " Gundo fork
-Plug 'majutsushi/tagbar'              " Pane with tags
-Plug 'machakann/vim-highlightedyank'  " Highlight yanks
-Plug 'andymass/vim-matchup'           " Highlight corresponding blocks e.g. if - fi in bash
-Plug 'kshenoy/vim-signature'          " Show marks in the gutter
-Plug 'yggdroot/indentline'            " Shows indentation levels
-Plug 'tpope/vim-eunuch'               " Unix helpers
-Plug 'moll/vim-bbye'                  " optional dependency for vim-symlink
-Plug 'aymericbeaumet/vim-symlink'     " Resolve symlinks before editing, plays nicely with undodir
-
-" Git GUI
-Plug 'airblade/vim-gitgutter'         " Git gutter
-Plug 'tpope/vim-fugitive'             " Git interface
-Plug 'tpope/vim-rhubarb'                    " Enable GBrowse from fugitive for GitHub
-Plug 'junegunn/gv.vim'                " TIG like navigation for vim
-Plug 'xuyuanp/nerdtree-git-plugin'    " Show status of files in NerdTree
-Plug 'tveskag/nvim-blame-line'        " Add git blame on line
-
-" Tmux GUI
-Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'roxma/vim-tmux-clipboard'
-Plug 'christoomey/vim-tmux-navigator'
-
-" VIM Ui
-Plug 'psliwka/vim-smoothie'
-
-" Autocomplete
-Plug 'ervandew/supertab'
-
-" Semantic language support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Syntactic language support
-Plug 'w0rp/ale'                        " Linting engine
-Plug 'maximbaz/lightline-ale'          " Lightline + Ale
-Plug 'plasticboy/vim-markdown'         " Markdown support
-Plug 'mzlogin/vim-markdown-toc'        " Markdown TOC builder
-Plug 'cespare/vim-toml'                " TOML support
-Plug 'stephpy/vim-yaml'                " YAML support
-Plug 'elzr/vim-json'                   " Better JSON support
-Plug 'mechatroner/rainbow_csv'         " CSV color coding
-Plug 'ap/vim-css-color'                " CSS colors
-Plug 'frazrepo/vim-rainbow'            " Rainbow parentheses
-Plug 'chrisbra/colorizer'              " Colorize color codes
-Plug 'vim-python/python-syntax'        " Python syntax highlight
-
-" Colorschemes
-Plug 'morhetz/gruvbox'
-" Plug 'chriskempson/base16-vim'         " Base16 themes
-" Plug 'gerw/vim-hilinktrace'            " Syntax Highlighting Tracer
-" Plug 'fatih/molokai'                  " Monokai and friends
-" Plug 'crusoexia/vim-monokai'
-" Plug 'phanviet/vim-monokai-pro'
-Plug 'patstockwell/vim-monokai-tasty'
-" Plug 'erichdongubler/vim-sublime-monokai'
-" Plug 'flazz/vim-colorschemes'          " Bunch of color schemes
-" Plug 'sainnhe/sonokai'                 " Monokai Pro-like scheme
-" Plug 'tanvirtin/monokai.nvim'
-
-" Writing
-Plug 'junegunn/goyo.vim'               " Distraction free mode
-Plug 'rhysd/vim-grammarous'            " GrammarCheck using LanguageTool
-Plug 'ron89/thesaurus_query.vim'       " Synonym query
-
-" Other
-Plug 'wakatime/vim-wakatime'           " Wakatime time tracking
-Plug 'ihsanturk/neuron.vim'            " For neuron Zettelkasten
-Plug 'liuchengxu/vim-which-key'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-call plug#end()
-
-" =============================================================================
-"  EDITOR SETTINGS
-" =============================================================================
-
-" Colorscheme
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme desert
-let g:python_highlight_all = 1
-
-syntax on           " enable syntax processing
-
-" Spaces & Tabs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tabstop=4       " number of visual spaces per TAB
-set softtabstop=4   " number of spaces in tab when editing
-set shiftwidth=4    " Insert 4 spaces on a tab
-set expandtab       " tabs are spaces, mainly because of python
-
-" UI Config
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set number              " show line numbers
-set relativenumber      " show relative numbering
-set showcmd             " show command in bottom bar
-set cursorline          " highlight current line
-filetype indent on      " load filetype-specific indent files
-filetype plugin on      " load filetype specific plugin files
-set wildmenu            " visual autocomplete for command menu
-set showmatch           " highlight matching [{()}]
-set laststatus=2        " Show the status line at the bottom
-set mouse+=a            " A necessary evil, mouse support
-set noerrorbells visualbell t_vb=    "Disable annoying error noises
-set splitbelow          " Open new vertical split bottom
-set splitright          " Open new horizontal splits right
-set linebreak           " Have lines wrap instead of continue off-screen
-set scrolloff=12        " Keep cursor in approximately the middle of the screen
-set updatetime=100      " Some plugins require fast updatetime
-set ttyfast             " Improve redrawing
-
-" Buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set hidden              " Allows having hidden buffers (not displayed in any window)
-
-" Sensible stuff
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set backspace=indent,eol,start     " Make backspace behave in a more intuitive way
-nmap Q <Nop>
-" 'Q' in normal mode enters Ex mode. You almost never want this.
-" Unbind for tmux
-map <C-a> <Nop>
-map <C-x> <Nop>
-
-
-"Searching
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
-set ignorecase          " Ignore case in searches by default
-set smartcase           " But make it case sensitive if an uppercase is entered
-" turn off search highlight
-vnoremap <C-h> :nohlsearch<cr>
-nnoremap <C-h> :nohlsearch<cr>
-" Ignore files for completion
-set wildignore+=*/.git/*,*/tmp/*,*.swp
-
-" Undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set undofile " Maintain undo history between sessions
-set undodir=~/.vim/undodir
-
-
-" Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set foldenable          " enable folding
-set foldlevelstart=10   " open most folds by default
-set foldnestmax=10      " 10 nested fold max
-" space open/closes folds
-" nnoremap <space> za
-set foldmethod=indent   " fold based on indent level
-" This is especially useful for me since I spend my days in Python.
-" Other acceptable values are marker, manual, expr, syntax, diff.
-" Run :help foldmethod to find out what each of those do.
-
-" Movement
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" move vertically by visual line
-nnoremap j gj
-nnoremap k gk
-" highlight last inserted text
-nnoremap gV `[v`]
-
-" Jump to start and end of line using the home row keys
-map H ^
-map L $
-
-" (Shift)Tab (de)indents code
-vnoremap <Tab> >
-vnoremap <S-Tab> <
-
-" Capital JK move code lines/blocks up & down
-" TODO improve functionality
-nnoremap K :move-2<CR>==
-nnoremap J :move+<CR>==
-xnoremap K :move-2<CR>gv=gv
-xnoremap J :move'>+<CR>gv=gv
-
-" Search results centered please
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
-nnoremap <C-o> <C-o>zz
-nnoremap <C-i> <C-i>zz
-
-" Very magic by default
-" nnoremap ? ?\v
-" nnoremap / /\v
-" cnoremap %s/ %sm/
-
-
-" Leader
-let mapleader=" "       " leader is space
-
-" Tmux
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" These lines change the cursor from block cursor mode to vertical bar cursor mode when using tmux.
-" Without these lines, tmux always uses block cursor mode.
-" allows cursor change in tmux mode
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
-
-" Lose Bad Habits
-" http://vimcasts.org/blog/2013/02/habit-breaking-habit-making/
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Remove newbie crutches in Command Mode
-" cnoremap <Down> <Nop>
-" cnoremap <Left> <Nop>
-" cnoremap <Right> <Nop>
-" cnoremap <Up> <Nop>
-
-" Remove newbie crutches in Insert Mode
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-
-" Remove newbie crutches in Normal Mode
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-nnoremap <Up> <Nop>
-
-" Remove newbie crutches in Visual Mode
-vnoremap <Down> <Nop>
-vnoremap <Left> <Nop>
-vnoremap <Right> <Nop>
-vnoremap <Up> <Nop>
-
-" =============================================================================
-"   CUSTOM FUNCTIONS
-" =============================================================================
-
-" toggle between number and relativenumber
-function! ToggleLineNumber()
-    if(&relativenumber == 1)
-        set norelativenumber
-        set number
-    else
-        set relativenumber
-    endif
-endfunc
-
-function! ToggleALEFix()
-    if(g:ale_fix_on_save == 1)
-        let g:ale_fix_on_save = 0
-    else
-        let g:ale_fix_on_save = 1
-    endif
-endfunc
-
-function! TogglePrettyJson()
-    if( line('$') == 1)
-        %!python -m json.tool
-    else
-        %j
-    endif
-endfunction
-
-function! ToggleColorColumn()
-    if &colorcolumn == ""
-        set colorcolumn=88
-    else
-        set colorcolumn=
-    endif
-endfunction
-
-function! ToggleZoom(toggle)
-  if exists("t:restore_zoom") && (t:restore_zoom.win != winnr() || a:toggle == v:true)
-      exec t:restore_zoom.cmd
-      unlet t:restore_zoom
-  elseif a:toggle
-      let t:restore_zoom = { 'win': winnr(), 'cmd': winrestcmd() }
-      vert resize | resize
-  endif
-endfunction
-augroup restorezoom
-    au WinEnter * silent! :call ToggleZoom(v:false)
+" highlight current line, but only in active window
+augroup CursorLineOnlyInActiveWindow
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
 augroup END
 
-
-command! LineNumberToggle call ToggleLineNumber()
-command! ALEfixToggle call ToggleALEFix()
-command! ColorColumnToggle call ToggleColorColumn()
-
-
-" To apply the macro to all lines you need a little trick I learned from Drew Neil’s
-" awesome book practical vim. Add the following script (visual-at.vim) to your vim
-" configuration. This allows you to visually select a section and then hit @ to run a
-" macro on all lines. Only lines which match will change. Without this script the
-" macro would stop at lines which don’t match the macro.
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-" =============================================================================
-"   PLUGIN CONFIG
-" =============================================================================
-"
-" META: Disabled by default
-let g:gitgutter_enabled = 0          " vim-gitgutter
-let g:indentLine_enabled = 0         " indentline
-let g:SignatureEnabledAtStartup = 0  " vim-signature
-let g:startify_custom_header =[]     " Disable startify header
-" Enabled by default
-let g:rainbow_active = 1
-
-
-" ALE
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ale_enabled = 1
-" For quick startup
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-" Set this variable to 1 to fix files when you save them.
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {
-    \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-    \   'javascript': ['prettier'],
-    \   'css': ['prettier'],
-    \   'html': ['prettier'],
-    \   'markdown': ['prettier'],
-    \   'json': ['prettier'],
-    \   'yaml': ['prettier'],
-    \}
-nmap <silent> [a <Plug>(ale_previous_wrap)
-nmap <silent> ]a <Plug>(ale_next_wrap)
-
-
-" Lightline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" --INSERT-- is unncessary because of lightline
-set noshowmode
-
-"Conquer of Completion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" remove the configs here because some errors with coc-vim.
-
-" Easymotion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use uppercase target labels and type as a lower case
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
-" Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
-map <Leader> <Plug>(easymotion-prefix)
-
-" incsearch
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-" incsearch-easymotion
-map z/ <Plug>(incsearch-easymotion-/)
-map z? <Plug>(incsearch-easymotion-?)
-map zg/ <Plug>(incsearch-easymotion-stay)
-
-" Minor Configs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" * Gundo
-if has('python3')
-    let g:gundo_prefer_python3 = 1
+" Set colorscheme for vim
+if has('gui_running')
+    colorscheme solarized
+    let g:lightline = {'colorscheme': 'solarized'}
+elseif &t_Co < 256
+    colorscheme default
+    set nocursorline " looks bad in this mode
+else
+    set background=light " set light or dark mode
+    let g:solarized_termcolors=256 " instead of 16 color with mapping in terminal
+    colorscheme solarized
+    " customized colors
+    highlight SignColumn ctermbg=234
+    highlight StatusLine cterm=bold ctermfg=245 ctermbg=235
+    highlight StatusLineNC cterm=bold ctermfg=245 ctermbg=235
+    let g:lightline = {'colorscheme': 'dark'}
+    highlight SpellBad cterm=underline
+    " patches
+    highlight CursorLineNr cterm=NONE
 endif
 
-" * NERDTree
-" Close vim if only window left is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Enable file type detection
+filetype plugin indent on 
 
-" * FZF
-set rtp+=/usr/local/opt/fzf
-let g:fzf_layout = { 'down': '~20%' }
+" Enable autoindent: new line will habe the same indent as the previous line
+set autoindent
 
-" * SuperTab
-" Tab goes down instead of up
-" let g:SuperTabDefaultCompletionType = "<c-n>"
+"---------------------------------------------------------
+" Basic Editing Config
+"---------------------------------------------------------
+" Disable the default Vim startup message.
+set shortmess+=I
 
-" GitGutter
-nmap ghs <Plug>(GitGutterStageHunk)
-nmap ghu <Plug>(GitGutterUndoHunk)
-nmap ghp <Plug>(GitGutterPreviewHunk)
+" Show line numbers.
+set number
 
-" vim-easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+" This enables relative line numbering mode. With both number and
+" relativenumber enabled, the current line shows the true line number, while
+" all other lines (above and below) are numbered relative to the current line.
+" This is useful because you can tell, at a glance, what count is needed to
+" jump up or down to a particular line, by {count}k to go up or {count}j to go
+" down.
+set relativenumber
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" Always show the status line at the bottom
+set laststatus=2
 
+" The backspace key has slightly unintuitive behavior by default. For example,
+" by default, you can't backspace before the insertion point set with 'i'.
+" This configuration makes backspace behave more reasonably, in that you can
+" backspace over anything.
+set backspace=indent,eol,start
 
+" By default, Vim doesn't let you hide a buffer (i.e. have a buffer that isn't
+" shown in any window) that has unsaved changes. This is to prevent you from "
+" forgetting about unsaved changes and then quitting e.g. via `:qa!`. We find
+" hidden buffers helpful enough to disable this protection. See `:help hidden`
+" for more information on this.
+set hidden
 
-" Secure Modelines
-let g:secure_modelines_allowed_items = [
-                \ "textwidth",   "tw",
-                \ "softtabstop", "sts",
-                \ "tabstop",     "ts",
-                \ "shiftwidth",  "sw",
-                \ "expandtab",   "et",   "noexpandtab", "noet",
-                \ "filetype",    "ft",
-                \ "foldmethod",  "fdm",
-                \ "readonly",    "ro",   "noreadonly", "noro",
-                \ "rightleft",   "rl",   "norightleft", "norl",
-                \ "colorcolumn"
-                \ ]
+" This setting makes search case-insensitive when all characters in the string
+" being searched are lowercase. However, the search becomes case-sensitive if
+" it contains any capital letters. This makes searching more convenient.
+set ignorecase
+set smartcase
 
-" =============================================================================
-"   CUSTOM SHORTCUTS  (LEADER, FN, &c)
-" =============================================================================
+" Enable searching as you type, rather than waiting till you press enter.
+set incsearch
 
-" Modifiers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-g> :Goyo<CR>
-map <C-p> :Files<CR>
-map <C-h> :History<CR>
+" Enable highlight search, highlight all search results
+set hls
 
-" Leader
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Define how special characters are displayed when list mode is enabled.
+" to enable list mode, use :set list; to disable list mode, use :set nolist
+" tab:>> means display tab as >>
+" nbsp:~ means display non-breaking spaces as ~
+set listchars=tab:>>,nbsp:~
 
-" <Nothing> -- vim-which-key
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+" Enable line breaking at word boundaries, making text more readable by avoiding breaking words in the middle.
+set lbr
 
-"  ;  --   FZF
-nmap <Leader>; :Buffers<CR>
+" Keep at least 5 lines visible above and below the cursor while scrolling.
+set scrolloff=5
 
-"  <Space>  --  <leader><leader> toggles between buffers
-nnoremap <Leader><Leader> <c-^>
+" Fix slow 0 inserts
+set timeout timeoutlen=1000 ttimeoutlen=100 
 
-"  - |     --  Split with leader
-nnoremap <Leader>- :sp<CR>
-nnoremap <Leader>\| :vsp<CR>
+" Skip redrawing screen in some cases
+set lazyredraw 
 
-"  w wq q   --  Quick Save
-nmap <Leader>w :w<CR>
-nmap <Leader>q :q<CR>
-nmap <Leader>wq :wq<CR>
-nmap <Leader>Q :q!<CR>
+" Automatically set current directory to directory of last opened file
+set autochdir
 
-"  y d p P   --  Quick copy paste into system clipboard
-nmap <Leader>y "+y
-nmap <Leader>d "+d
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+" Enable more history
+set history=8192
 
-"  e g H -- FZF
-nnoremap <Leader>g :Rg<CR>
-nnoremap <Leader>e :Files<CR>
-nnoremap <Leader>H :History<CR>
+" Suppress inserting two spaces between sentences
+set nojoinspaces
 
-" hjkl  s j k t / ? g/   -- EasyMotion
-map <Leader>h <Plug>(easymotion-linebackward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>l <Plug>(easymotion-lineforward)
+" Use 4 spaces isntead of tabs during formatting
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-" vim-sneak behaviour through easymotio
-map <Leader>t <Plug>(easymotion-t2)
-nmap <Leader>t <Plug>(easymotion-overwin-t2)
-map <Leader>s <Plug>(easymotion-f2)
-nmap <Leader>s <Plug>(easymotion-overwin-f2)
+" Make tab completetion more user-friendly
+set wildmode=longest,list
+set wildmenu
 
-map <Leader>/ <Plug>(incsearch-easymotion-/)
-map <Leader>? <Plug>(incsearch-easymotion-?)
-map <Leader>g/ <Plug>(incsearch-easymotion-stay)
+" Enable mouse support. You should avoid relying on this too much, but it can sometimes be convenient.
+set mouse+=a
 
+" Disable floding when a file is opoened
+set nofoldenable
 
-"  u    -- Undo Tree toggle show
-" nnoremap <Leader>u :GundoToggle<CR>
-nnoremap <Leader>u :MundoToggle<CR>
+"---------------------------------------------------------
+" Misc Configg
+"---------------------------------------------------------
+" Unbind some useless/annoying default key bindings.
+nmap <C-a> <Nop>
+nmap <C-x> <Nop>
+nmap Q <Nop> 
 
-"  oa oc oe ofog om on op ot os    --  Miscellaneous toggles
-nnoremap <Leader>oa :ALEToggle<CR>
-nnoremap <Leader>ob :ToggleBlameLine<CR>
-nnoremap <Leader>oc :ColorToggle<CR>
-nnoremap <Leader>oe :NERDTreeToggle<CR>
-nnoremap <Leader>of :ALEfixToggle<CR>
-nnoremap <Leader>oj :call TogglePrettyJson()<CR>
-nnoremap <Leader>og :GitGutterToggle<CR>
-nnoremap <Leader>ol :ColorColumnToggle<CR>
-nnoremap <Leader>om :SignatureToggle<CR>
-nnoremap <Leader>on :LineNumberToggle<CR>
-nnoremap <Leader>op :RainbowToggle<CR>
-nnoremap <Leader>ot :Vista!!<CR>
-nnoremap <Leader>os :setlocal spell! spelllang=en_us<CR>
-" nnoremap <Leader>nf :NERDTreeFind<CR>
+" Disable audible bell because it's annoying.
+set noerrorbells visualbell t_vb=
 
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
 
-"  z   -- Toggle Pane Zoom
-nnoremap <silent> <Leader>+ :call ToggleZoom(v:true)<CR>
+" Try to prevent bad habits like using the arrow keys for movement. This is
+" not the only possible bad habit. For example, holding down the h/j/k/l keys
+" for movement, rather than using more efficient movement commands, is also a
+" bad habit. The former is enforceable through a .vimrc, while we don't know
+" how to prevent the latter.
+" Do this in normal mode...
+nnoremap <Left>  :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up>    :echoe "Use k"<CR>
+nnoremap <Down>  :echoe "Use j"<CR>
+" ...and in insert mode
+inoremap <Left>  <ESC>:echoe "Use h"<CR>
+inoremap <Right> <ESC>:echoe "Use l"<CR>
+inoremap <Up>    <ESC>:echoe "Use k"<CR>
+inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
-" `  `v  `z  rv  -- edit vimrc/zshrc and load vimrc bindings
-nnoremap <Leader>` :Startify<CR>
-nnoremap <Leader>`z :vsp ~/.zshrc<CR>
-nnoremap <Leader>`v :vsp ~/.vimrc<CR>
-nnoremap <Leader>rv :source ~/.vimrc<CR>
+"---------------------------------------------------------
+" Plugin Config
+"---------------------------------------------------------
 
-" S    --  save session,  After saving a Vim session, you can reopen it with vim -S.
-" nnoremap <Leader>S :mksession<CR>
-
-" aw    -- ArgWrap
-nnoremap <Leader>aw :ArgWrap<CR>
-
-
-" numbers
-nnoremap <Leader>1 1gt<CR>
-nnoremap <Leader>2 2gt<CR>
-nnoremap <Leader>3 3gt<CR>
-nnoremap <Leader>4 4gt<CR>
-nnoremap <Leader>5 5gt<CR>
-nnoremap <Leader>6 6gt<CR>
-nnoremap <Leader>7 7gt<CR>
-nnoremap <Leader>8 8gt<CR>
-nnoremap <Leader>9 9gt<CR>
-nnoremap <Leader>n :tabnew<CR>
-nnoremap <Leader>x :tabclose<CR>
-
-
-" rn F a ac af U -- Conquer of Completion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if exists('g:coc_custom_config')
-    " Symbol renaming.
-    nmap <leader>rn <Plug>(coc-rename)
-
-    nmap <Leader>! :<C-u>CocList diagnostics<CR>
-
-    " TODO figure out
-    " Formatting selected code.
-    " xmap <leader>F  <Plug>(coc-format-selected)
-    " nmap <leader>F  <Plug>(coc-format-selected)
-    " Applying codeAction to the selected region.
-    " Example: `<leader>aap` for current paragraph
-    " xmap <leader>a  <Plug>(coc-codeaction-selected)
-    " nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-    " Remap keys for applying codeAction to the current buffer.
-    " nmap <leader>ac  <Plug>(coc-codeaction)
-    " Apply AutoFix to problem on the current line.
-    " nmap <leader>af  <Plug>(coc-fix-current)
-
-    """"""""""""" Coc-Git
-    " Undo git chunk (closest to linewise undo)
-    nmap <Leader>U :CocCommand git.chunkUndo<CR>
-    " Toggle GitGutter
-    nmap <Leader>og :CocCommand git.toggleGutters<CR>
-    " " navigate chunks of current buffer
-    nmap [c <Plug>(coc-git-prevchunk)
-    nmap ]c <Plug>(coc-git-nextchunk)
-    " show chunk diff at current position
-    nmap gs <Plug>(coc-git-chunkinfo)
-    " show commit contains current position
-    nmap gc <Plug>(coc-git-commit)
-    " " create text object for git chunks
-    omap ig <Plug>(coc-git-chunk-inner)
-    xmap ig <Plug>(coc-git-chunk-inner)
-    omap ag <Plug>(coc-git-chunk-outer)
-    xmap ag <Plug>(coc-git-chunk-outer)
-
-    " Play nicely with EasyMotion
-    autocmd User EasyMotionPromptBegin silent! CocDisable
-    autocmd User EasyMotionPromptEnd silent! CocEnable
-endif
-
-" nnoremap <Leader>s :call <SID>StripTrailingWhitespaces()<CR>
-
-" FN
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Spellcheck Keyboard shorcut (https://vim.fandom.com/wiki/Toggle_spellcheck_with_function_keys)
-map <F5> :setlocal spell! spelllang=en_us<CR>
-map <F7> :NERDTreeToggle<CR>
-map <F8> :Vista!!<CR>
-
-" Syntax Highlighting Debugging
-" map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-" \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-" \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-
-" =============================================================================
-" # Autocommands
-" =============================================================================
-
-" Prevent accidental writes to buffers that shouldn't be edited
-autocmd BufRead *.orig set readonly
-autocmd BufRead *.bk set readonly
-
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-
-" Help filetype detection
-autocmd BufRead *.plot set filetype=gnuplot
-autocmd BufRead *.md set filetype=markdown
-autocmd BufRead *.tex set filetype=tex
-autocmd BufRead *.rss set filetype=xml
-
-" =============================================================================
-"   LOCAL CONFIG
-" =============================================================================
-
-" local customizations in ~/.vimrc_local
-let $LOCALFILE=expand("~/.vimrc_local")
-if filereadable($LOCALFILE)
-    source $LOCALFILE
-endif
-
-
-function! DoPrettyXML()
-  " save the filetype so we can restore it later
-  let l:origft = &ft
-  set ft=
-  " delete the xml header if it exists. This will
-  " permit us to surround the document with fake tags
-  " without creating invalid xml.
-  1s/<?xml .*?>//e
-  " insert fake tags around the entire document.
-  " This will permit us to pretty-format excerpts of
-  " XML that may contain multiple top-level elements.
-  0put ='<PrettyXML>'
-  $put ='</PrettyXML>'
-  silent %!xmllint --format -
-  " xmllint will insert an <?xml?> header. it's easy enough to delete
-  " if you don't want it.
-  " delete the fake tags
-  2d
-  $d
-  " restore the 'normal' indentation, which is one extra level
-  " too deep due to the extra tags we wrapped around the document.
-  silent %<
-  " back to home
-  1
-  " restore the filetype
-  exe "set ft=" . l:origft
-endfunction
-command! PrettyXML call DoPrettyXML()
-
-let g:ale_float_preview=1
+" markdown
+let g:markdown_fenced_languages = [
+    \ 'asm',
+    \ 'bash=sh',
+    \ 'c',
+    \ 'coffee',
+    \ 'erb=eruby',
+    \ 'javascript',
+    \ 'json',
+    \ 'perl',
+    \ 'python',
+    \ 'ruby',
+    \ 'yaml',
+    \ 'go',
+    \ 'racket',
+    \ 'haskell',
+    \ 'rust',
+\]
+let g:markdown_syntax_conceal = 0
+let g:markdown_folding = 1
