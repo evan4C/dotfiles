@@ -181,7 +181,6 @@ let g:markdown_fenced_languages = [
     \ 'asm',
     \ 'bash=sh',
     \ 'c',
-    \ 'coffee',
     \ 'erb=eruby',
     \ 'javascript',
     \ 'json',
@@ -190,8 +189,6 @@ let g:markdown_fenced_languages = [
     \ 'ruby',
     \ 'yaml',
     \ 'go',
-    \ 'racket',
-    \ 'haskell',
     \ 'rust',
 \]
 let g:markdown_syntax_conceal = 0
