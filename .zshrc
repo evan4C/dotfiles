@@ -21,10 +21,16 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+source "$(brew --prefix powerlevel10k)/share/powerlevel10k/powerlevel10k.zsh-theme"
 source ~/dotfiles/env/.aliases
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+RUBIES=(
+    /Users/lifan/.rubies/*
+)
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+chruby ruby-3.4.1 # run chruby to see actual version
