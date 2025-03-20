@@ -34,3 +34,7 @@ RUBIES=(
 )
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 chruby ruby-3.4.1 # run chruby to see actual version
+
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+source /Users/lifan/.config/broot/launcher/bash/br
