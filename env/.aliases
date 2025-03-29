@@ -16,11 +16,7 @@ alias_if_exists 'fdupes' 'jdupes'
 
 ## cd & ls
 alias dc="cd"
-
-mvr () {
-    # reverse mv
-    mv $2 $1
-}
+alias ll='ls -al'
 
 alias cf='cd $(fd -t d | fzf)'
 
@@ -31,16 +27,6 @@ alias gm='git commit -m'
 
 # Note that gs is also ghostscript
 alias ghostscript="/usr/local/bin/gs"
-
-function gD(){
-    git diff $@ | ydiff
-}
-
-## Jupyter
-alias jc="jupyter console"
-alias jco="jupyter nbconvert"
-alias jn="jupyter notebook"
-alias jn-b="jupyter notebook --no-browser"
 
 # Yotube-DL
 alias yt="youtube-dl"
@@ -64,17 +50,3 @@ alias rg="sep; rg -u"
 
 alias clock='watch -n 0.1 "date +"%H:%M:%S" | toilet -f bigmono9"' # -f future
 
-# Rename terminal Windows
-  # $1 = type; 0 - both, 1 - tab, 2 - title
-  # rest = text
-setTerminalText () {
-    # echo works in bash & zsh
-    local mode=$1 ; shift
-    echo -ne "\033]$mode;$@\007"
-}
-stt_both  () { setTerminalText 0 $@; }
-stt_tab   () { setTerminalText 1 $@; }
-stt_title () { setTerminalText 2 $@; }
-
-tn () { stt_tab $@ && tmux new -s $@; }
-ta () { stt_tab $@ && tmux a -t $@; }

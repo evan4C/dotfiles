@@ -1,0 +1,87 @@
+export XDG_CONFIG_HOME=$HOME/.config
+VIM="nvim"
+
+# uncomment to load personal configurations
+# PERSONAL=$XDG_CONFIG_HOME/personal
+# source $PERSONAL/env
+# for i in `find -L $PERSONAL`; do
+#     source $i
+# done
+ 
+# fzf config for linux
+# source /usr/share/doc/fzf/examples/key-bindings.zsh
+# source /usr/share/doc/fzf/examples/completion.zsh
+
+# fzf config for macOS
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# broot configuration
+source /Users/lifan/.config/broot/launcher/bash/br
+
+eval "$(zoxide init zsh)"
+
+# chruby configuration for Jekyll development
+RUBIES=(
+    /Users/lifan/.rubies/*
+)
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+chruby ruby-3.4.1 # run chruby to see actual version
+
+# Environment variables configuraiton
+export CC="clang-12"
+export CXX="clang++-12"
+export GIT_EDITOR=$VIM
+export DOTFILES=$HOME/dotfiles
+
+# addToPathFront $HOME/.local/scripts
+# addToPathFront $HOME/.local/bin
+
+# Enable tmux-sessionizer
+export PATH="$PATH:$HOME/.local/scripts"
+bindkey -s ^f "tmux-sessionizer\n"
+
+# Useful functions
+
+# Print file content between line $1 and line $2
+catr() {
+    tail -n "+$1" $3 | head -n "$(($2 - $1 + 1))"
+}
+
+# Print file content into 1 line
+cat1Line() {
+    cat $1 | tr -d "\n"
+}
+
+# Check if a yaml file is valid
+validateYaml() {
+    python -c 'import yaml,sys;yaml.safe_load(sys.stdin)' < $1
+}
+
+# Switch to npm configuration for work projects
+goWork() {
+    cp ~/.npm_work_rc ~/.npmrc
+}
+
+# Switch to npm configuration for personal projects
+goPersonal() {
+    cp ~/.npm_personal_rc ~/.npmrc
+}
+
+# Set a speed limit for network testing(wlp59s0)
+addThrottle() {
+    local kbs="kbps"
+    echo $kbs
+    echo "About to throttle to $1 $kbs"
+    echo "sudo tc qdisc add dev wlp59s0 handle 1: root htb default 11"
+    echo "sudo tc class add dev wlp59s0 parent 1: classid 1:1 htb rate $1$kbs"
+    echo "sudo tc class add dev wlp59s0 parent 1:1 classid 1:11 htb rate $1$kbs"
+    sudo tc qdisc add dev wlp59s0 handle 1: root htb default 11
+    sudo tc class add dev wlp59s0 parent 1: classid 1:1 htb rate $1$kbs
+    sudo tc class add dev wlp59s0 parent 1:1 classid 1:11 htb rate $1$kbs
+}
+
+# Remove the speed limit above
+removeThrottle() {
+    sudo tc qdisc del dev wlp59s0 root
+}
+
