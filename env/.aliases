@@ -6,13 +6,11 @@ function alias_if_exists() {
     fi
 }
 
-
 # Better defaults
 alias_if_exists 'diff' 'colordiff'
 alias_if_exists 'ag' 'rg'
 alias_if_exists 'vim' 'nvim'
 alias_if_exists 'fdupes' 'jdupes'
-
 
 # Shortcuts
 
@@ -27,16 +25,13 @@ mvr () {
 alias cf='cd $(fd -t d | fzf)'
 
 ## Git
-alias ga='git add'
+alias ga='git add .'
 alias gs='git status'
-alias gu='git pull'
-alias gg='git graph'
-alias gd='git diff'
-alias gsu='git stash && git pull && git stash pop'
-alias gc='git commit'
-alias gk='git add . && git commit -m "quick post" && git push'
+alias gm='git commit -m'
+
 # Note that gs is also ghostscript
 alias ghostscript="/usr/local/bin/gs"
+
 function gD(){
     git diff $@ | ydiff
 }
@@ -68,6 +63,7 @@ alias sep='tput cols | python -c "import sys; print(\"=\"*int(sys.stdin.read().s
 alias rg="sep; rg -u"
 
 alias clock='watch -n 0.1 "date +"%H:%M:%S" | toilet -f bigmono9"' # -f future
+
 # Rename terminal Windows
   # $1 = type; 0 - both, 1 - tab, 2 - title
   # rest = text

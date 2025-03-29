@@ -141,8 +141,17 @@ set mouse+=a
 " Disable floding when a file is opoened
 set nofoldenable
 
+" 将默认寄存器与系统剪贴板同步（需要 Vim 支持 +clipboard）
+" set clipboard=unnamedplus  " Linux 或部分配置
+set clipboard=unnamed    " macOS 默认行为（使用 * 寄存器）
+
+" 映射 Vim 剪贴板命令到 macOS 系统剪贴板
+let mapleader = "," " 将<leader>键设置为逗号
+vnoremap <leader>y :w !pbcopy<CR>   " 复制选中内容到系统剪贴板
+nnoremap <leader>p :r !pbpaste<CR>  " 从系统剪贴板粘贴
+
 "---------------------------------------------------------
-" Misc Configg
+" Misc Config
 "---------------------------------------------------------
 " Unbind some useless/annoying default key bindings.
 nmap <C-a> <Nop>
