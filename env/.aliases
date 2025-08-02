@@ -11,6 +11,13 @@ alias_if_exists 'diff' 'colordiff'
 alias_if_exists 'ag' 'rg'
 alias_if_exists 'vim' 'nvim'
 alias_if_exists 'fdupes' 'jdupes'
+alias_if_exists 'cat' 'bat'
+alias_if_exists 'ls' 'eza'
+
+# use fzf to optimize vim, disabled, since it's annoying
+# if command -v 'fzf' > /dev/null; then
+#  alias nvim='nvim $(fzf)'
+# fi
 
 # Shortcuts
 
@@ -24,6 +31,8 @@ alias cf='cd $(fd -t d | fzf)'
 alias ga='git add .'
 alias gs='git status'
 alias gm='git commit -m'
+alias gg='git log --oneline'
+alias gap='git add .&&git commit -m "quick commit"&&git push'
 
 # Note that gs is also ghostscript
 alias ghostscript="/usr/local/bin/gs"
