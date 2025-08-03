@@ -1,30 +1,27 @@
----
-title: 从零搭建开发环境
-date: 2025-03-29
-categories: [SWE]
-tags: [shell, bash, Linux]
----
-
 **Inspired by the famous MIT course: [The Missing Semester of Your CS Education](https://missing.csail.mit.edu)**
 
 ## 快捷键速查表
 
-| 快捷键        | 功能                             | 应用    |
-| ------------- | -------------------------------- | ------- |
-| <Alt + arrow> | switch between windows           | zellij  |
-| <Shift+1>     | cursor                           | raycast |
-| <Shift+2>     | iTerm2                           | raycast |
-| <Shift+3>     | safari                           | raycast |
-| <Shift+0>     | system settings                  | raycast |
-| <Alt+v>       | toggle sidebar                   | vs code |
-| <Alt+b>       | toggle 2nd sidebar               | vs code |
-| <Alt+n>       | toggle terminal                  | vs code |
-| <space+w,s>   | save                             | vs code |
-| <space+h>     | clear search highlighting        | vs code |
-| <space+f>     | quick open                       | vs code |
-| <space+q>     | quick quit                       | vs code |
-| <space+m>     | mark the current position        | vs code |
-| <space+j>     | jump back to the marked position | vs code |
+| 快捷键               | 功能                              | 应用    |
+| -------------       | -------------------------------- | ------- |
+| <Alt + arrow>       | switch between windows           | zellij  |
+| <Shift+1>           | cursor                           | raycast |
+| <Shift+2>           | iTerm2                           | raycast |
+| <Shift+3>           | safari                           | raycast |
+| <Shift+0>           | system settings                  | raycast |
+| <Ctrl+Alt+←>        | left half window                 | raycast |
+| <Ctrl+Alt+→>        | right half window                | raycast |
+| <Ctrl+Alt+Enter>    | maximum window                   | raycast |
+| <Alt+v>             | toggle sidebar                   | vs code |
+| <Alt+b>             | toggle 2nd sidebar               | vs code |
+| <Alt+n>             | toggle terminal                  | vs code |
+| <space+w,s>         | save                             | vs code |
+| <space+h>           | clear search highlighting        | vs code |
+| <space+f>           | quick open                       | vs code |
+| <space+q>           | quick quit                       | vs code |
+| <space+m>           | mark the current position        | vs code |
+| <space+j>           | jump back to the marked position | vs code |
+| <Ctrl+R>            | fzf search command history       | zsh     | 
 
 ## 终端优化：iterm2
 
@@ -260,7 +257,23 @@ tmux -V
 
 **neovim 作为首选编辑器，主要用于编写代码和纯英文相关的技术文档。**
 
-fork TJ 的 kickstart 项目，通过`~/.config/nvim/init.lua`对 neovim 进行配置，具体配置可以参考 fork 后的 repo。
+### install nvim
+
+```bash
+curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
+tar xzf nvim-macos-arm64.tar.gz
+mv nvim-macos-arm64/bin/nvim ~/.local/bin
+sudo mv nvim-macos-arm64/share/nvim /usr/local/share/nvim
+```
+
+### create init.lua and config
+
+fork TJ 的 kickstart 项目，通过`~/.config/nvim/init.lua`对 neovim 进行配置，为了不和原始的主分支发生冲突，并且方便后续更新主分支，自己的配置在 my-config 分支上进行修改。
+
+```bash
+cd ~/.config
+git clone https://github.com/evan4C/kickstart.nvim.git nvim
+```
 
 参考 ThePrimeagen 的 neovim 系列视频，练习 neovim 的快捷键。
 
