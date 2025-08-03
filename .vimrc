@@ -27,25 +27,25 @@ augroup CursorLineOnlyInActiveWindow
 augroup END
 
 " Set colorscheme for vim
-if has('gui_running')
-    colorscheme solarized
-    let g:lightline = {'colorscheme': 'solarized'}
-elseif &t_Co < 256
-    colorscheme default
-    set nocursorline " looks bad in this mode
-else
-    set background=dark " set light or dark mode
-    let g:solarized_termcolors=256 " instead of 16 color with mapping in terminal
-    colorscheme solarized
-    " customized colors
-    highlight SignColumn ctermbg=234
-    highlight StatusLine cterm=bold ctermfg=245 ctermbg=235
-    highlight StatusLineNC cterm=bold ctermfg=245 ctermbg=235
-    let g:lightline = {'colorscheme': 'dark'}
-    highlight SpellBad cterm=underline
-    " patches
-    highlight CursorLineNr cterm=NONE
-endif
+" if has('gui_running')
+"     colorscheme solarized
+"     let g:lightline = {'colorscheme': 'solarized'}
+" elseif &t_Co < 256
+"     colorscheme default
+"     set nocursorline " looks bad in this mode
+" else
+"     set background=dark " set light or dark mode
+"     let g:solarized_termcolors=256 " instead of 16 color with mapping in terminal
+"     colorscheme solarized
+"     " customized colors
+"     highlight SignColumn ctermbg=234
+"     highlight StatusLine cterm=bold ctermfg=245 ctermbg=235
+"     highlight StatusLineNC cterm=bold ctermfg=245 ctermbg=235
+"     let g:lightline = {'colorscheme': 'dark'}
+"     highlight SpellBad cterm=underline
+"     " patches
+"     highlight CursorLineNr cterm=NONE
+" endif
 
 " Enable file type detection
 filetype plugin indent on 

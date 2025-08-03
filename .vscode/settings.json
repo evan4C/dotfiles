@@ -1,2 +1,111 @@
 {
+    "window.commandCenter": true,
+    "workbench.colorTheme": "Dracula Theme Soft",
+    "editor.accessibilitySupport": "on",
+    "cursor.cpp.disabledLanguages": [
+      "plaintext"
+    ],
+
+    // vim enhance
+    "vim.useSystemClipboard": true,
+    "vim.ignorecase": true,
+    "vim.smartcase": true,
+    "vim.leader": "<space>",
+
+    // triggered with <leader><leader> (e.g., <space><space>w)
+    "vim.easymotion": true,
+
+    // search results are updated in real-time
+    "vim.incsearch": true,
+    // highlight all search matches
+    "vim.hlsearch": true,
+
+    // enable some useful VSCode keys
+    "vim.handleKeys": {
+        "<C-s>": false, // enable save
+        "<C-z>": false, // enable undo
+        "<C-y>": false,  // enable redo
+        "<C-x>": false,  // enable cut
+        "<C-c>": false,  // enable copy
+        "<C-v>": false,  // enable paste
+  },
+
+  // define custom key bindings for Vim's Normal mode that are non-recursive(execute exactly as specified)
+  // - before: The key or key combination you want to trigger the action
+  // - after: The sequence of keys/commands to execute when the before key is pressed
+  // - commands: (Optional) A list of VS Code commands to execute instead of Vim key sequences
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "h"],  // clear search highlighting
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["<leader>", "f"],  // quick open
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "w"],  // quick save
+      "commands": [":w"]
+    },
+    {
+      "before": ["<leader>", "q"],  // quick quit
+      "commands": [":q"]
+    },
+    {
+      "before": ["<leader>", "s"],  // quick save
+      "commands": ["workbench.action.files.save"]
+    },
+    {
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.view.explorer"]
+    },
+    {
+      "before": ["<leader>", "g"],  // show all open files
+      "commands": ["workbench.action.showAllEditors"]
+    },
+    {
+      "before": ["<leader>", "m"],  // mark the current position
+      "after": ["m", "a"]
+    },
+    {
+      "before": ["<leader>", "j"],  // jump back to the marked position
+      "after": ["`", "a"]
+    },
+    {
+      "before": ["<leader>", "v"],  // visual block mode
+      "after": ["<C-v>"]
+    },
+    {
+      "before": ["<leader>", "y"],  // copy to system clipboard
+      "after": ["\"", "+", "y"]
+    },
+    {
+      "before": ["<leader>", "p"],  // paste from system clipboard
+      "after": ["\"", "+", "p"]
+    },
+    {
+      "before": ["<leader>", "g"],  // global replace
+      "after": [":", "%", "s", "/"]
+    }
+  ],
+
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+
+  // Visual mode selection persists after indenting or outdenting
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<"],
+      "after": ["<", "g", "v"]
+    },
+    {
+      "before": [">"],
+      "after": [">", "g", "v"]
+    }
+  ],
+  "editor.lineNumbers": "relative"
 }

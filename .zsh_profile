@@ -16,16 +16,20 @@ VIM="nvim"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # broot configuration
-source /Users/lifan/.config/broot/launcher/bash/br
+if command -v broot >/dev/null 2>&1; then
+  source $HOME/.config/broot/launcher/bash/br
+fi
 
 eval "$(zoxide init zsh)"
 
 # chruby configuration for Jekyll development
-RUBIES=(
-    /Users/lifan/.rubies/*
-)
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-chruby ruby-3.4.1 # run chruby to see actual version
+if [ -d $HOME/.rubies ]; then
+    RUBIES=(
+        $HOME/.rubies/*
+    )
+    source /usr/local/opt/chruby/share/chruby/chruby.sh
+    chruby ruby-3.4.1 # run chruby to see actual version
+fi
 
 # Environment variables configuraiton
 export CC="clang-12"
@@ -105,5 +109,5 @@ newp() {
     echo "Successfully created $FILE!"
 }
 
-export PATH=/Users/lifan/Developer/flutter/bin:$PATH
+export PATH=$HOME/Developer/flutter/bin:$PATH
 export PATH=$HOME/.gem/ruby/3.4.1/bin:$PATH
