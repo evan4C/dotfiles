@@ -23,6 +23,13 @@
 | <space+j>           | jump back to the marked position | vs code |
 | <Ctrl+R>            | fzf search command history       | zsh     | 
 
+## Modifier Key Remapping (Caps Lock -> Esc)
+
+1. Go to: System Settings of macOS → Keyboard.
+2. Click Keyboard Shortcuts....
+3. Select Modifier Keys... at the bottom.
+4. Remap Caps Lock to Esc.
+
 ## 终端优化：iterm2
 
 在 macOS 环境下，第一件事就是要替换掉原生的 terminal。因为 Apple 原生的 terminal 不支持 true-color，导致 neovim 的主题显示异常。具体可以参考 reddit 上的[讨论](https://www.reddit.com/r/neovim/comments/zq6d53/how_to_fix_colorschemes_in_mac_terminal/)
@@ -62,16 +69,18 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 ```
 
-4. install zsh-completions
-
-```bash
-git clone https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-```
-
-5. install zsh-vi-mode
+4. install zsh-vi-mode
 
 ```bash
 git clone https://github.com/jeffreytse/zsh-vi-mode.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-vi-mode
+```
+
+5. install zsh-completions
+
+need a special install method, refer to the [offical doc](https://github.com/zsh-users/zsh-completions)
+
+```bash
+git clone https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
 ```
 
 ## 安装编程开发环境
