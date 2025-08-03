@@ -40,6 +40,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 ### install solarized theme for vim
 
+[solarized theme](https://github.com/altercation/vim-colors-solarized)
+
 ### install zsh plugins
 
 1. install zsh-autosuggestions
@@ -101,7 +103,7 @@ zoxide 是增强版的 cd，可以根据历史记录自动推荐路径，并且�
 # install
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
-# add to .zshrc
+# add to .zshrc if needed
 export PATH="$HOME/.local/bin:$PATH"
 
 # verify
@@ -131,14 +133,7 @@ bat 是 cat 的增强版，支持语法高亮。
 
 ```bash
 # install
-tar -xzf bat-v0.25.0-aarch64-apple-darwin.tar
-cd bat-v0.25.0-aarch64-apple-darwin
-
-mkdir -p ~/.local/bin
-mv bat ~/.local/bin/
-
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
+cargo install bat --locked
 
 # verify
 bat --version
@@ -185,6 +180,14 @@ rg --version
 
 zellij 是增强版的 tmux，支持多窗口管理和项目编辑，并且可以通过 cargo 安装，非常方便。
 
+```bash
+# install
+cargo install zellij
+
+# verify
+zellij --version
+```
+
 zellij 在 lock 模式下可以方便的进行复制粘贴，非常方便。
 
 zellij 默认支持 tmux 的快捷键，默认的前缀是<Ctrl+B>，可以修改为<Ctrl+A>。
@@ -201,14 +204,6 @@ bind "|" { NewPane "right"; SwitchToMode "normal"; }
 ```
 
 zellij 的另一大功能是支持自定义 layout，可以参考[zellij 的文档](https://zellij.dev/documentation/configuration/layout/)。
-
-```bash
-# install
-cargo install zellij
-
-# verify
-zellij --version
-```
 
 ## 窗口管理器 2：tmux [deprecated, please use zellij]
 
