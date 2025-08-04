@@ -1,12 +1,6 @@
 {
-    "window.commandCenter": true,
-    "workbench.colorTheme": "Dracula Theme Soft",
-    "editor.accessibilitySupport": "on",
-    "cursor.cpp.disabledLanguages": [
-      "plaintext"
-    ],
-
-    // vim enhance
+    // vim enhance settings in vs code
+    "editor.lineNumbers": "relative",
     "vim.useSystemClipboard": true,
     "vim.ignorecase": true,
     "vim.smartcase": true,
@@ -106,6 +100,5 @@
       "before": [">"],
       "after": [">", "g", "v"]
     }
-  ],
-  "editor.lineNumbers": "relative"
+  ]
 }
