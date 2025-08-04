@@ -1,9 +1,6 @@
 # config fzf for zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# load zoxide settings
-eval "$(zoxide init zsh)"
-
 # ensures CMake & Make will use clang-12 and clang++-12 instead of default gcc/g++
 export CC="clang-12"
 export CXX="clang++-12"
@@ -23,6 +20,9 @@ addToPathFront() {
 # add local scripts
 addToPathFront $HOME/.local/scripts
 addToPathFront $HOME/.local/bin
+
+# load zoxide settings
+eval "$(zoxide init zsh)"
 
 # Enable tmux-sessionizer
 # export PATH="$PATH:$HOME/.local/scripts"
