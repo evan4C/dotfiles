@@ -285,6 +285,8 @@ git clone https://github.com/evan4C/kickstart.nvim.git nvim
 
 **vs code 主要用来写博客，和 review 一些比较复杂的项目。**
 
+参考本repo 的 vs code settings 对 vim mode 进行优化
+
 vs code 的一些有用的插件
 
 - 好看的主题：vesper，非常高级和漂亮的黑色主题
@@ -293,4 +295,7 @@ vs code 的一些有用的插件
 
 ## 工具箱：Raycast
 
-Raycast 相当于 apple 自带的 spotlight 的全面升级版，提供了很多实用的小功能，目前最常用的是对每个应用设置快捷键，直接从键盘打开相应的应用，不需要再使用鼠标。
+Raycast 相当于 apple 自带的 spotlight 的全面升级版，提供了很多实用的小功能，目前最常用的设置：
+
+1. 对每个应用设置快捷键，直接从键盘打开相应的应用，不需要再使用鼠标。
+2. 为应用的排列模式设置快捷键（left half、right half、maximum），取代 magnet 的功能
