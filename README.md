@@ -167,7 +167,7 @@ tldr 是简化版的 man 命令，提供更简洁的命令使用说明。
 
 ```bash
 # install
-cargo install tldc --locked
+cargo install tlrc --locked
 
 # verify
 tldr --version
