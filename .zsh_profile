@@ -1,38 +1,16 @@
-export XDG_CONFIG_HOME=$HOME/.config
-VIM="nvim"
-
-# uncomment to load personal configurations
-# PERSONAL=$XDG_CONFIG_HOME/personal
-# source $PERSONAL/env
-# for i in `find -L $PERSONAL`; do
-#     source $i
-# done
-
-# fzf config for macOS
+# config fzf for zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# broot configuration
-if command -v broot >/dev/null 2>&1; then
-  source $HOME/.config/broot/launcher/bash/br
-fi
 
 # load zoxide settings
 eval "$(zoxide init zsh)"
 
-# chruby configuration for Jekyll development
-if [ -d $HOME/.rubies ]; then
-    RUBIES=(
-        $HOME/.rubies/*
-    )
-    source /usr/local/opt/chruby/share/chruby/chruby.sh
-    chruby ruby-3.4.1 # run chruby to see actual version
-fi
-
-# Environment variables configuraiton
+# ensures CMake & Make will use clang-12 and clang++-12 instead of default gcc/g++
 export CC="clang-12"
 export CXX="clang++-12"
+
+# set the default editor
+VIM="nvim"
 export GIT_EDITOR=$VIM
-export DOTFILES=$HOME/dotfiles
 
 addToPathFront() {
   for dir in "$@"; do
@@ -47,11 +25,8 @@ addToPathFront $HOME/.local/scripts
 addToPathFront $HOME/.local/bin
 
 # Enable tmux-sessionizer
-export PATH="$PATH:$HOME/.local/scripts"
+# export PATH="$PATH:$HOME/.local/scripts"
 bindkey -s ^f "tmux-sessionizer\n"
-
-addToPathFront $HOME/Developer/flutter/bin
-addToPathFront $HOME/.gem/ruby/3.4.1/bin
 
 # Useful functions
 
