@@ -7,10 +7,6 @@ VIM="nvim"
 # for i in `find -L $PERSONAL`; do
 #     source $i
 # done
- 
-# fzf config for linux
-# source /usr/share/doc/fzf/examples/key-bindings.zsh
-# source /usr/share/doc/fzf/examples/completion.zsh
 
 # fzf config for macOS
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -20,6 +16,7 @@ if command -v broot >/dev/null 2>&1; then
   source $HOME/.config/broot/launcher/bash/br
 fi
 
+# load zoxide settings
 eval "$(zoxide init zsh)"
 
 # chruby configuration for Jekyll development
@@ -37,12 +34,24 @@ export CXX="clang++-12"
 export GIT_EDITOR=$VIM
 export DOTFILES=$HOME/dotfiles
 
-# addToPathFront $HOME/.local/scripts
-# addToPathFront $HOME/.local/bin
+addToPathFront() {
+  for dir in "$@"; do
+    if [ -d "$dir" ] && [[ ":$PATH:" != *":$dir:"* ]]; then
+      PATH="$dir:$PATH"
+    fi
+  done
+}
+
+# add local scripts
+addToPathFront $HOME/.local/scripts
+addToPathFront $HOME/.local/bin
 
 # Enable tmux-sessionizer
 export PATH="$PATH:$HOME/.local/scripts"
 bindkey -s ^f "tmux-sessionizer\n"
+
+addToPathFront $HOME/Developer/flutter/bin
+addToPathFront $HOME/.gem/ruby/3.4.1/bin
 
 # Useful functions
 
@@ -108,6 +117,3 @@ newp() {
     echo "---" >> $FILE
     echo "Successfully created $FILE!"
 }
-
-export PATH=$HOME/Developer/flutter/bin:$PATH
-export PATH=$HOME/.gem/ruby/3.4.1/bin:$PATH
